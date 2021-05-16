@@ -3,18 +3,20 @@
 class EmpresaCliente {
 
     public $db;
- 
+      /**
+       * La función obtiene la conexion a la base de datos
+       */
      public function __construct(){
         $this->db =  Conexion::ConectarDB();
      }
      /**
-      * Undocumented function
-      *
-      * @param [type] $nombre
-      * @param [type] $correo
-      * @param [type] $descripcion
-      * @param [type] $telefono
-      * @param [type] $clave
+      * Esta función registra datos en la tabla empresa_cliente en la BD
+      * y también valida si la empresa_cliente está registrado o no
+      * @param string $nombre
+      * @param string $correo
+      * @param string $descripcion
+      * @param string $telefono
+      * @param string $clave
       * @return void
       */
      public function registrarEmpresa( $nombre,$correo,$descripcion,$telefono,$clave){
@@ -50,7 +52,13 @@ class EmpresaCliente {
          }
 
      }
-
+      /**
+       * Esta función valida los datos de la empresa al momento de iniciar sesión
+       *
+       * @param string $correo
+       * @param string $clave
+       * @return void
+       */
      public function ValidarEmpresa($correo,$clave){
       $sql = "SELECT * FROM empresa_cliente WHERE correo = :correo";
       $result = $this->db->prepare($sql);
@@ -69,6 +77,11 @@ class EmpresaCliente {
       }
    }
 
+      /**
+       * Esta función obtiene todos los datos de la tabla empresa_cliente 
+       *
+       * @return void
+       */
      public function getEmpresa() {
         $sql = $this->db->prepare("select * from empresa_cliente");
         $sql->execute();

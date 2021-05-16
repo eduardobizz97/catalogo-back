@@ -3,11 +3,22 @@
 class Cliente {
 
     public $db;
- 
+   /**
+    * La función obtiene la conexion a la base de datos
+    */
      public function __construct(){
         $this->db =  Conexion::ConectarDB();
      }
      
+     /**
+      * Esta función registra datos en la tabla Clientes en la BD
+      * y también valida si el cliente está registrado o no
+      * @param string $nombre
+      * @param string $correo
+      * @param string $clave
+      * @param string $telefono
+      * @return void
+      */
      public function registrarClientes( $nombre,$correo,$clave, $telefono){
 
          $validate = "SELECT correo from clientes where correo = :correo";
@@ -40,6 +51,13 @@ class Cliente {
          }
      }
 
+   /**
+    * Esta función permite validar los datos del Cliente al momento de 
+    * iniciar sesión
+    * @param string $correo
+    * @param string $clave
+    * @return void
+    */
      public function ValidarCliente($correo,$clave){
       $sql = "SELECT * FROM clientes WHERE correo = :correo";
       $result = $this->db->prepare($sql);
@@ -58,6 +76,11 @@ class Cliente {
       }
    }
 
+      /**
+       * Esta función obtiene todos los datos de la tabla clientes de la BD
+       *
+       * @return void
+       */
      public function getClientes() {
         $sql = $this->db->prepare("select * from clientes");
         $sql->execute();
