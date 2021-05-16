@@ -72,7 +72,7 @@ class Producto {
       if($result->execute()){
          $response = array('result' => "SUCCESS");
          echo json_encode($response);
-         exit(); ;  
+         exit();  
       }else{
          $response = array('result' => "Error al modificar categoria");
          echo json_encode($response);
@@ -80,7 +80,19 @@ class Producto {
       }
   }
      
-
+     public function getAllProducto() {
+        $sql = "SELECT * FROM productos";
+        $result = $this->db->prepare($sql);
+        if($result->execute()){
+         $result=$result->fetchAll(PDO::FETCH_ASSOC);
+         $response = array('result' => "SUCCESS",'productos'=>$result);
+         echo json_encode($response);
+         exit();  
+      }
+        $result=$result->fetchAll(PDO::FETCH_ASSOC);
+        echo json_encode($result);
+        
+     }
 
 }
 

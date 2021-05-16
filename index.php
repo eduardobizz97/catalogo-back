@@ -194,6 +194,11 @@
         }
     });
 
+    Route::add('/producto/listar', function(){
+
+        $producto = new Producto();
+        $producto->getAllProducto();
+    });
 
     Route::run("/");
   
