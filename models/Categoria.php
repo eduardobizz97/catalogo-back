@@ -3,11 +3,19 @@
 class Categoria {
 
     public $db;
- 
+   /**
+    * La función obtiene la conexion a la base de datos
+    */
      public function __construct(){
         $this->db =  Conexion::ConectarDB();
      }
-     
+
+     /**
+      * La función registra una Categoria a la BD
+      *
+      * @param string $nombre
+      * @return void
+      */
      public function registrarCategoria($nombre){
          $sql = "INSERT INTO categorias(nombre, estado) VALUES (:nombre, 1)";
          $result = $this->db->prepare($sql);
@@ -23,7 +31,13 @@ class Categoria {
             exit();
          }
      }
-
+     /**
+      * Esta función modifica los datos de la tabla Categoria en la BD
+      *
+      * @param integer $id
+      * @param string $nombre
+      * @return void
+      */
      public function modificarCategoria($id,$nombre){
       $sql = "UPDATE categorias SET nombre=:nombre WHERE id = $id";
       $result = $this->db->prepare($sql);
@@ -39,6 +53,12 @@ class Categoria {
       }
   }
 
+  /**
+   * Esta función elimina los datos de la tabla Categoria de la BD
+   *
+   * @param integer $id
+   * @return void
+   */
    public function eliminarCategoria($id){
       $sql = "UPDATE categorias SET estado=0 WHERE id = $id";
       $result = $this->db->prepare($sql);
@@ -53,7 +73,12 @@ class Categoria {
          exit();
       }
    }
-
+   /**
+    * Esta función permite buscar por id de Categoria 
+    *
+    * @param integer $id
+    * @return void
+    */
       public function buscarCategorias($id) {
          $sql = $this->db->prepare("SELECT * FROM categorias WHERE id = $id ");
          $sql->execute();
@@ -64,6 +89,11 @@ class Categoria {
          }
       }
 
+      /**
+       * Esta función obtiene todos los datos de la tabla Categoria
+       * que tengan como estado 1(Habilitado)
+       * @return void
+       */
      public function getCategorias() {
         $sql = $this->db->prepare("SELECT * FROM categorias WHERE estado = 1");
         $sql->execute();

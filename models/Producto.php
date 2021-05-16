@@ -3,11 +3,23 @@
 class Producto {
 
     public $db;
- 
+      /**
+       * La función obtiene la conexion a la base de datos
+       */
      public function __construct(){
         $this->db =  Conexion::ConectarDB();
      }
      
+     /**
+      * Esta función registra datos en la tabla productos en la BD
+      *
+      * @param string $nombre
+      * @param string $precio
+      * @param string $stock
+      * @param string $categoria
+      * @param string $idEmpresa
+      * @return void
+      */
      public function registrarProducto($nombre,$precio,$stock,$categoria,$idEmpresa){
          $sql = "INSERT INTO productos(nombre,precio,stock,categoria_id,id_empresa) VALUES (:nombre,:precio,:stock,:categoria_id,:id_empresa)";
          $result = $this->db->prepare($sql);
@@ -27,6 +39,17 @@ class Producto {
          }
      }
 
+     /**
+      * Esta función modifica los datos de la tabla productos en la BD
+      *
+      * @param string $id
+      * @param string $nombre
+      * @param string $precio
+      * @param string $stock
+      * @param string $categoria
+      * @param string $idEmpresa
+      * @return void
+      */
      public function modificarProducto($id,$nombre,$precio,$stock,$categoria,$idEmpresa){
       $sql = "UPDATE productos SET nombre=:nombre, precio=:precio,stock=:stock,categoria_id=:categoria_id WHERE id = $id";
       $result = $this->db->prepare($sql);
@@ -45,7 +68,12 @@ class Producto {
          exit();
       }
   }
-
+      /**
+       * Esta función busca por id productos
+       *
+       * @param integer $id
+       * @return void
+       */
       public function buscarProductos($id) {
          $sql = $this->db->prepare("SELECT * FROM productos WHERE id = $id ");
          $sql->execute();
@@ -56,7 +84,10 @@ class Producto {
          }
       }
 
-     public function getProducto($id) {
+      /**
+       * Esta función obtiene todos los productos de cada empresa
+       */
+      public function getProducto($id) {
         $sql = "SELECT * FROM productos WHERE id_empresa = :empresa";
         $result = $this->db->prepare($sql);
         $result->bindParam(':empresa',$id, PDO::PARAM_INT, 12);   
@@ -65,7 +96,12 @@ class Producto {
         echo json_encode($result);
         
      }
-
+     /**
+      * Esta función elimina datos de la tabla productos dependiendo del id
+      *
+      * @param [type] $id
+      * @return void
+      */
      public function eliminarProducto($id){
       $sql = "DELETE FROM productos WHERE id = $id";
       $result = $this->db->prepare($sql);

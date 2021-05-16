@@ -1,6 +1,10 @@
 <?php
 class Conexion{
-
+    /**
+     * Esta static function realiza la conexion con la base de datos.
+     * En caso de error retorna un PDOException.
+     * @return void
+     */
     static function ConectarDB()
     {
         try{
