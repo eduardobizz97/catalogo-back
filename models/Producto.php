@@ -115,7 +115,11 @@ class Producto {
          exit();
       }
   }
-     
+     /**
+      * Esta función obtiene todos los datos de la tabla productos de la BD
+      *
+      * @return void
+      */
      public function getAllProducto() {
         $sql = "SELECT * FROM productos";
         $result = $this->db->prepare($sql);
